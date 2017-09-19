@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context="com.example.japhy.cards.MainActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/cardText"
+        android:gravity="center"
+        android:textColor="#000"
+        android:textSize="26sp"
+        android:id="@+id/counterID" />
+
+    <TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="1 Try"
+    android:paddingRight="20dp"
+    android:gravity="right"
+    android:textColor="#000"
+    android:textSize="26sp"
+    android:id="@+id/triesID"
+    android:visibility="invisible"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Score: 0"
+        android:paddingRight="20dp"
+        android:gravity="left"
+        android:textColor="#000"
+        android:textSize="26sp"
+        android:id="@+id/scoreID"
+        android:visibility="invisible"/>
+
+    <ImageView
+        android:paddingBottom="16dp"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/counterID"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="28dp"
+        android:id="@+id/imageId"
+        android:src="@drawable/playbutton"
+        />
+    <ImageView
+
+        android:layout_width="205.5dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="28dp"
+        android:id="@+id/upId"
+        android:src="@drawable/up"
+        android:background="#ffffff"
+        android:alpha="0.2"
+        android:visibility="invisible"
+        />
+
+    <ImageView
+
+        android:layout_width="206.5dp"
+        android:layout_height="fill_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="28dp"
+        android:id="@+id/downId"
+        android:background="#ffffff"
+        android:src="@drawable/down"
+        android:alpha="0.2"
+        android:visibility="invisible"
+        />
+
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="210dp"
+        android:layout_height="match_parent"
+        android:text="Down"
+        android:color="#66FF0000"
+        android:alpha="0.0"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_width="210dp"
+        android:text="Up"
+        android:color="#66FF0000"
+        android:alpha="0.0"/>
+
+    <Button
+        android:id="@+id/againID"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="Again?"
+        android:gravity="center"
+        android:color="#66FF0000"
+        android:visibility="invisible"
+        android:onClick="reset"
+        android:layout_below="@+id/counterID"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="42dp"
+        android:layout_marginStart="42dp" />
+
+    <Button
+        android:id="@+id/shuffleID"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="Shuffle"
+        android:gravity="center"
+        android:color="#66FF0000"
+        android:visibility="invisible"
+        android:onClick="shuffle"
+        android:layout_marginRight="38dp"
+        android:layout_below="@+id/counterID"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="42dp" />
+
+</RelativeLayout>
