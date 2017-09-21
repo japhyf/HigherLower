@@ -1,9 +1,13 @@
 package com.example.japhy.cards;
 
+import android.animation.Animator;
+import android.animation.ValueAnimator;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 import java.util.Collections;
@@ -21,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     TextView counter;
     TextView scoreCounter;
     ImageView image1;
+    ImageView image2;
     Button leftButton;
     Button rightButton;
     Button again;
@@ -70,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
         counter=(TextView)findViewById(R.id.counterID);
         image1=(ImageView)findViewById(R.id.imageId);
+        image2=(ImageView)findViewById(R.id.imageId2);
         leftButton=(Button)findViewById(R.id.button1);
         rightButton=(Button)findViewById(R.id.button2);
         again=(Button)findViewById(R.id.againID);
@@ -92,7 +98,9 @@ public class MainActivity extends AppCompatActivity {
                 if (i == 0) {
 
                     String variableValue = (deck[i]);
+                    String variableValue2 = (deck[i+1]);
                     image1.setImageResource(getResources().getIdentifier(variableValue, "drawable", getPackageName()));
+                    image2.setImageResource(getResources().getIdentifier(variableValue2, "drawable", getPackageName()));
                     i = i + 1;
                     counter.setText(c + "/52");
                     if(tries > 1){
@@ -105,80 +113,105 @@ public class MainActivity extends AppCompatActivity {
                     tryCounter.setVisibility(View.VISIBLE);
                     System.out.println("counter should say " + c + "/52");
                     c++;
-                } else if (i < 52) {
+                } else {
+                    if (i < 52) {
 
-                    for (int n = 0; n < deck[i-1].length(); n++) {
-                        char a = deck[i-1].charAt(n);
-                        if (Character.isDigit(a)) {
-                            number1 = number1 + a;
 
+                        for (int n = 0; n < deck[i - 1].length(); n++) {
+                            char a = deck[i - 1].charAt(n);
+                            if (Character.isDigit(a)) {
+                                number1 = number1 + a;
+
+                            } else {
+                                letter1 = letter1 + a;
+                            }
+
+                        }
+                        for (int n = 0; n < deck[i].length(); n++) {
+                            char a = deck[i].charAt(n);
+                            if (Character.isDigit(a)) {
+                                number2 = number2 + a;
+
+                            } else {
+                                letter2 = letter2 + a;
+                            }
+
+                        }
+                        if (Integer.parseInt(number1) == 1) {
+                            number1 = "14";
+                        }
+                        if (Integer.parseInt(number2) == 1) {
+                            number2 = "14";
+                        }
+
+                        if (Integer.parseInt(number1) >= Integer.parseInt(number2)) {
+                            DisplayMetrics displayMetrics = new DisplayMetrics();
+                            getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+                            //1
+
+                            ValueAnimator valueAnimator = ValueAnimator.ofFloat(0, displayMetrics.heightPixels);
+                            valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                                @Override
+                                public void onAnimationUpdate(ValueAnimator animation) {
+                                    //3
+                                    float value = (float) animation.getAnimatedValue();
+                                    //4
+                                    image1.setTranslationY(value);
+                                }
+                            });
+                            valueAnimator.setInterpolator(new LinearInterpolator());
+                            valueAnimator.setDuration(500);
+//6
+                            valueAnimator.start();
+                            String variableValue = (deck[i]);
+                            String variableValue2 = (deck[i+1]);
+
+                            valueAnimator.setRepeatMode(ValueAnimator.RESTART);
+                            image1.setImageResource(getResources().getIdentifier(variableValue, "drawable", getPackageName()));
+                            //valueAnimator.setRepeatMode(ValueAnimator.RESTART);
+                            image2.setImageResource(getResources().getIdentifier(variableValue2, "drawable", getPackageName()));
+                            counter.setText(c + "/52");
+                            System.out.println("last number was: " + number1 + "  number is: " + number2);
+                            if (c > score) {
+                                score++;
+                                SharedPreferences sharedPref = getSharedPreferences("score", 0);
+                                //now get Editor
+                                SharedPreferences.Editor mEditor = sharedPref.edit();
+                                //put your value
+                                mEditor.putInt("score", score);
+                                //commits your edits
+                                mEditor.commit();
+                                scoreCounter.setText("Highscore: " + score);
+                            }
+                            c++;
+                            i++;
+                            number1 = "";
+                            letter1 = "";
+                            number2 = "";
+                            letter2 = "";
                         } else {
-                            letter1 = letter1 + a;
+                            System.out.println("last number was: " + number1 + "  number is: " + number2);
+                            image1.setImageResource(getResources().getIdentifier("lose", "drawable", getPackageName()));
+                            again.setVisibility(View.VISIBLE);
+                            shuffle.setVisibility(View.VISIBLE);
+                            down.setVisibility(View.INVISIBLE);
+                            up.setVisibility(View.INVISIBLE);
+                            leftButton.setEnabled(false);
+                            rightButton.setEnabled(false);
+
+
                         }
 
-                    }
-                    for (int n = 0; n < deck[i].length(); n++) {
-                        char a = deck[i].charAt(n);
-                        if (Character.isDigit(a)) {
-                            number2 = number2 + a;
-
-                        } else {
-                            letter2 = letter2 + a;
-                        }
-
-                    }
-                    if(Integer.parseInt(number1) == 1){
-                        number1 = "14";
-                    }
-                    if(Integer.parseInt(number2) == 1){
-                        number2 = "14";
-                    }
-
-                    if(Integer.parseInt(number1) >= Integer.parseInt(number2)){
-                        String variableValue = (deck[i]);
-                        image1.setImageResource(getResources().getIdentifier(variableValue, "drawable", getPackageName()));
-                        counter.setText(c + "/52");
-                        System.out.println("last number was: " + number1 + "  number is: " + number2);
-                        if(c > score){
-                            score++;
-                            SharedPreferences sharedPref= getSharedPreferences("score", 0);
-                            //now get Editor
-                            SharedPreferences.Editor mEditor= sharedPref.edit();
-                            //put your value
-                            mEditor.putInt("score", score);
-                            //commits your edits
-                            mEditor.commit();
-                            scoreCounter.setText("Highscore: " + score);
-                        }
-                        c++;
-                        i++;
-                        number1 = "";
-                        letter1 = "";
-                        number2 = "";
-                        letter2 = "";
-                    }
-                    else{
-                        System.out.println("last number was: " + number1 + "  number is: " + number2);
-                        image1.setImageResource(getResources().getIdentifier("lose", "drawable", getPackageName()));
+                    } else {
+                        counter.setText("52/52");
+                        image1.setImageResource(getResources().getIdentifier("trophy", "drawable", getPackageName()));
                         again.setVisibility(View.VISIBLE);
-                        shuffle.setVisibility(View.VISIBLE);
+                        //shuffle.setVisibility(View.VISIBLE);
                         down.setVisibility(View.INVISIBLE);
                         up.setVisibility(View.INVISIBLE);
                         leftButton.setEnabled(false);
                         rightButton.setEnabled(false);
-
-
                     }
-
-                } else {
-                    counter.setText("52/52");
-                    image1.setImageResource(getResources().getIdentifier("trophy", "drawable", getPackageName()));
-                    again.setVisibility(View.VISIBLE);
-                    //shuffle.setVisibility(View.VISIBLE);
-                    down.setVisibility(View.INVISIBLE);
-                    up.setVisibility(View.INVISIBLE);
-                    leftButton.setEnabled(false);
-                    rightButton.setEnabled(false);
                 }
 
             }
@@ -290,7 +323,9 @@ public class MainActivity extends AppCompatActivity {
         i = 0;
         c = 0;
         String variableValue = (deck[i]);
+        String variableValue2 = (deck[i+1]);
         image1.setImageResource(getResources().getIdentifier(variableValue, "drawable", getPackageName()));
+        image2.setImageResource(getResources().getIdentifier(variableValue2, "drawable", getPackageName()));
         i = i + 1;
         counter.setText(c + "/52");
         again.setVisibility(View.INVISIBLE);
