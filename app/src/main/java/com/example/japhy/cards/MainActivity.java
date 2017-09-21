@@ -162,14 +162,30 @@ public class MainActivity extends AppCompatActivity {
                             valueAnimator.setInterpolator(new LinearInterpolator());
                             valueAnimator.setDuration(500);
 //6
+                            valueAnimator.addListener(new Animator.AnimatorListener() {
+
+                                @Override
+                                public void onAnimationEnd(Animator animation) {
+                                    // 4
+                                    String variableValue = (deck[i]);
+                                    String variableValue2 = (deck[i+1]);
+
+                                    //valueAnimator.setRepeatMode(ValueAnimator.RESTART);
+                                    image1.setImageResource(getResources().getIdentifier(variableValue, "drawable", getPackageName()));
+                                    //valueAnimator.setRepeatMode(ValueAnimator.RESTART);
+                                    image2.setImageResource(getResources().getIdentifier(variableValue2, "drawable", getPackageName()));
+                                    finish();
+                                }
+
+                            });
                             valueAnimator.start();
-                            String variableValue = (deck[i]);
-                            String variableValue2 = (deck[i+1]);
+                            //String variableValue = (deck[i]);
+                            //String variableValue2 = (deck[i+1]);
 
                             valueAnimator.setRepeatMode(ValueAnimator.RESTART);
-                            image1.setImageResource(getResources().getIdentifier(variableValue, "drawable", getPackageName()));
+                            //image1.setImageResource(getResources().getIdentifier(variableValue, "drawable", getPackageName()));
                             //valueAnimator.setRepeatMode(ValueAnimator.RESTART);
-                            image2.setImageResource(getResources().getIdentifier(variableValue2, "drawable", getPackageName()));
+                            //image2.setImageResource(getResources().getIdentifier(variableValue2, "drawable", getPackageName()));
                             counter.setText(c + "/52");
                             System.out.println("last number was: " + number1 + "  number is: " + number2);
                             if (c > score) {
