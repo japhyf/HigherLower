@@ -39,8 +39,8 @@
         android:visibility="invisible"/>
 
     <FrameLayout
-        android:layout_width="1000dp"
-        android:layout_height="1000dp"
+        android:layout_width="400dp"
+        android:layout_height="600dp"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true">
 
@@ -71,6 +71,35 @@
             android:id="@+id/imageId"
             android:src="@drawable/playbutton" />
 
+        <Button
+            android:id="@+id/againID"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="Again"
+            android:gravity="end"
+            android:layout_gravity="bottom"
+            android:color="#66FF0000"
+            android:visibility="invisible"
+            android:onClick="reset"
+            android:layout_marginBottom="50dp"
+            android:layout_marginLeft="42dp"
+            android:textSize="20sp"
+            android:layout_marginStart="42dp" />
+
+        <Button
+            android:id="@+id/shuffleID"
+            android:layout_gravity="bottom"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="Shuffle"
+            android:color="#66FF0000"
+            android:visibility="invisible"
+            android:onClick="shuffle"
+            android:gravity="end"
+            android:textSize="20sp"
+            android:layout_marginBottom="50dp"
+            android:layout_marginLeft="250dp"
+            android:layout_marginStart="250dp" />
 
     </FrameLayout>
 
@@ -122,7 +151,7 @@
         android:text="Up"
         android:color="#66FF0000"
         android:alpha="0.0"/>
-
+<!--
     <Button
         android:id="@+id/againID"
         android:layout_height="wrap_content"
@@ -152,5 +181,5 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="42dp" />
-
+-->
 </RelativeLayout>

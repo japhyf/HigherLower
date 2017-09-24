@@ -9,6 +9,7 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import java.util.Collections;
 import java.util.Arrays;
@@ -157,6 +158,8 @@ public class MainActivity extends AppCompatActivity {
                                     float value = (float) animation.getAnimatedValue();
                                     //4
                                     image1.setTranslationY(value);
+                                    //image1.setRotation(value);
+
                                 }
                             });
                             valueAnimator.setInterpolator(new LinearInterpolator());
@@ -165,27 +168,31 @@ public class MainActivity extends AppCompatActivity {
                             valueAnimator.addListener(new Animator.AnimatorListener() {
 
                                 @Override
+                                public void onAnimationStart(Animator animation) {
+
+                                }
+                                @Override
                                 public void onAnimationEnd(Animator animation) {
                                     // 4
-                                    String variableValue = (deck[i]);
-                                    String variableValue2 = (deck[i+1]);
-
-                                    //valueAnimator.setRepeatMode(ValueAnimator.RESTART);
+                                    String variableValue = (deck[i-1]);
+                                    String variableValue2 = (deck[i]);
                                     image1.setImageResource(getResources().getIdentifier(variableValue, "drawable", getPackageName()));
-                                    //valueAnimator.setRepeatMode(ValueAnimator.RESTART);
                                     image2.setImageResource(getResources().getIdentifier(variableValue2, "drawable", getPackageName()));
-                                    finish();
+                                    image1.setTranslationY(0);
+                                    //image1.setRotation(0);
+                                }
+                                @Override
+                                public void onAnimationCancel(Animator animation) {
+
+                                }
+
+                                @Override
+                                public void onAnimationRepeat(Animator animation) {
+
                                 }
 
                             });
                             valueAnimator.start();
-                            //String variableValue = (deck[i]);
-                            //String variableValue2 = (deck[i+1]);
-
-                            valueAnimator.setRepeatMode(ValueAnimator.RESTART);
-                            //image1.setImageResource(getResources().getIdentifier(variableValue, "drawable", getPackageName()));
-                            //valueAnimator.setRepeatMode(ValueAnimator.RESTART);
-                            //image2.setImageResource(getResources().getIdentifier(variableValue2, "drawable", getPackageName()));
                             counter.setText(c + "/52");
                             System.out.println("last number was: " + number1 + "  number is: " + number2);
                             if (c > score) {
@@ -206,8 +213,56 @@ public class MainActivity extends AppCompatActivity {
                             number2 = "";
                             letter2 = "";
                         } else {
+
+                            DisplayMetrics displayMetrics = new DisplayMetrics();
+                            getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+                            //1
+                            image2.setImageResource(getResources().getIdentifier("blank", "drawable", getPackageName()));
+                            ValueAnimator valueAnimator = ValueAnimator.ofFloat(0, displayMetrics.heightPixels);
+                            valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                                @Override
+                                public void onAnimationUpdate(ValueAnimator animation) {
+                                    //3
+                                    float value = (float) animation.getAnimatedValue();
+                                    //4
+                                    image1.setTranslationY(value);
+                                    //image1.setRotation(value);
+
+                                }
+                            });
+                            valueAnimator.setInterpolator(new LinearInterpolator());
+                            valueAnimator.setDuration(500);
+//6
+                            valueAnimator.addListener(new Animator.AnimatorListener() {
+
+                                @Override
+                                public void onAnimationStart(Animator animation) {
+
+                                }
+                                @Override
+                                public void onAnimationEnd(Animator animation) {
+                                    // 4
+                                    image1.setImageResource(getResources().getIdentifier("blank", "drawable", getPackageName()));
+                                    image2.setImageResource(getResources().getIdentifier("blank", "drawable", getPackageName()));
+                                    image1.setTranslationY(0);
+                                    //image1.setRotation(0);
+                                }
+                                @Override
+                                public void onAnimationCancel(Animator animation) {
+
+                                }
+
+                                @Override
+                                public void onAnimationRepeat(Animator animation) {
+
+                                }
+
+                            });
+                            valueAnimator.start();
+
                             System.out.println("last number was: " + number1 + "  number is: " + number2);
-                            image1.setImageResource(getResources().getIdentifier("lose", "drawable", getPackageName()));
+                            //image1.setImageResource(getResources().getIdentifier("lose", "drawable", getPackageName()));
+                            //image2.setVisibility(View.INVISIBLE);
                             again.setVisibility(View.VISIBLE);
                             shuffle.setVisibility(View.VISIBLE);
                             down.setVisibility(View.INVISIBLE);
@@ -285,8 +340,52 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     if(Integer.parseInt(number1) <= Integer.parseInt(number2)){
-                        String variableValue = (deck[i]);
-                        image1.setImageResource(getResources().getIdentifier(variableValue, "drawable", getPackageName()));
+                        DisplayMetrics displayMetrics = new DisplayMetrics();
+                        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+                        //1
+
+                        ValueAnimator valueAnimator = ValueAnimator.ofFloat(0, -displayMetrics.heightPixels);
+                        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                            @Override
+                            public void onAnimationUpdate(ValueAnimator animation) {
+                                //3
+                                float value = (float) animation.getAnimatedValue();
+                                //4
+                                image1.setTranslationY(value);
+                            }
+                        });
+                        valueAnimator.setInterpolator(new LinearInterpolator());
+                        valueAnimator.setDuration(500);
+//6
+                        valueAnimator.addListener(new Animator.AnimatorListener() {
+
+                            @Override
+                            public void onAnimationStart(Animator animation) {
+
+                            }
+                            @Override
+                            public void onAnimationEnd(Animator animation) {
+                                // 4
+                                String variableValue = (deck[i-1]);
+                                String variableValue2 = (deck[i]);
+                                image1.setImageResource(getResources().getIdentifier(variableValue, "drawable", getPackageName()));
+                                image2.setImageResource(getResources().getIdentifier(variableValue2, "drawable", getPackageName()));
+                                image1.setTranslationY(0);
+                            }
+                            @Override
+                            public void onAnimationCancel(Animator animation) {
+
+                            }
+
+                            @Override
+                            public void onAnimationRepeat(Animator animation) {
+
+                            }
+
+                        });
+                        valueAnimator.start();
+                        //String variableValue = (deck[i]);
+                        //image1.setImageResource(getResources().getIdentifier(variableValue, "drawable", getPackageName()));
                         i = i + 1;
                         System.out.println("last number was: " + number1 + " next number is: " + number2);
                         counter.setText(c + "/52");
@@ -309,6 +408,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     else{
                         System.out.println("last number was: " + number1 + "  number is: " + number2);
+                        image2.setVisibility(View.INVISIBLE);
                         image1.setImageResource(getResources().getIdentifier("lose", "drawable", getPackageName()));
                         again.setVisibility(View.VISIBLE);
                         shuffle.setVisibility(View.VISIBLE);
@@ -342,6 +442,7 @@ public class MainActivity extends AppCompatActivity {
         String variableValue2 = (deck[i+1]);
         image1.setImageResource(getResources().getIdentifier(variableValue, "drawable", getPackageName()));
         image2.setImageResource(getResources().getIdentifier(variableValue2, "drawable", getPackageName()));
+        image2.setVisibility(View.VISIBLE);
         i = i + 1;
         counter.setText(c + "/52");
         again.setVisibility(View.INVISIBLE);
@@ -367,6 +468,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
     public void shuffle(View view){
+        String variableValue = (deck[i]);
+        String variableValue2 = (deck[i+1]);
+        image1.setImageResource(getResources().getIdentifier(variableValue, "drawable", getPackageName()));
+        image2.setImageResource(getResources().getIdentifier(variableValue2, "drawable", getPackageName()));
+        image2.setVisibility(View.VISIBLE);
         String[] array = deck;
         SharedPreferences prefs = getSharedPreferences("deck", 0);
         Collections.shuffle(Arrays.asList(deck));
@@ -379,8 +485,8 @@ public class MainActivity extends AppCompatActivity {
         editor.apply();
         i = 0;
         c = 0;
-        String variableValue = (deck[i]);
-        image1.setImageResource(getResources().getIdentifier(variableValue, "drawable", getPackageName()));
+        //variableValue = (deck[i]);
+        //image1.setImageResource(getResources().getIdentifier(variableValue, "drawable", getPackageName()));
         i = i + 1;
         counter.setText(c + "/52");
         again.setVisibility(View.INVISIBLE);
